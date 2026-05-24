@@ -42,6 +42,24 @@ export function AuthForm() {
       return;
     }
 
+    if (mode === "login" && response.data.user) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", response.data.user.id)
+        .single();
+
+      const rolePath =
+        profile?.role === "admin"
+          ? "/gestao"
+          : profile?.role === "professional"
+            ? "/profissional"
+            : "/cliente";
+
+      window.location.href = rolePath;
+      return;
+    }
+
     setMessage(
       mode === "signup"
         ? "Cadastro criado. Verifique seu e-mail se a confirmação estiver ativa."
