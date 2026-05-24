@@ -1,0 +1,18 @@
+{
+  "name": "Manicure Expert",
+  "short_name": "Manicure Expert",
+  "description": "Sua manicure onde voce estiver.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff8f5",
+  "theme_color": "#e93f86",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/logo-manicure-expert.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
