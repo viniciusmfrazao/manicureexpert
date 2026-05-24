@@ -1,0 +1,11 @@
+<svg width="680" height="220" viewBox="0 0 680 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="680" height="220" rx="44" fill="#FFF8F5"/>
+  <circle cx="110" cy="110" r="72" fill="url(#paint0_linear)"/>
+  <path d="M78 127C89 97 102 77 118 65C129 57 142 60 147 72C153 87 139 106 124 117C111 127 96 132 78 127Z" fill="#FFF8F5"/>
+  <path d="M84 137C105 143 130 137 149 119" stroke="#D7A84D" stroke-width="10" stroke-linecap="round"/>
+  <path d="M133 62C139 50 151 42 164 40" stroke="#FFF8F5" stroke-width="9" stroke-linecap="round"/>
+  <text x="214" y="102" fill="#5B1239" font-family="Playfair Display, Georgia, serif" font-size="58" font-weight="800">Manicure</text>
+  <text x="214" y="157" fill="#E93F86" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="800">Expert</text>
+  <text x="432" y="157" fill="#77636F" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Sua manicure onde você estiver.</text>
+  <defs><linearGradient id="paint0_linear" x1="51" y1="51" x2="163" y2="172" gradientUnits="userSpaceOnUse"><stop stop-color="#FF806F"/><stop offset="0.48" stop-color="#E93F86"/><stop offset="1" stop-color="#5B1239"/></linearGradient></defs>
+</svg>
