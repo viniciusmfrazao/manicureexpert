@@ -39,6 +39,7 @@ export function ProfessionalDashboard() {
   const [userId, setUserId] = useState("");
   const [professionalId, setProfessionalId] = useState("");
   const [fullName, setFullName] = useState("Profissional Teste");
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [bio, setBio] = useState("Manicure e pedicure com atendimento em domicilio.");
   const [city, setCity] = useState("Sao Paulo");
   const [state, setState] = useState("SP");
@@ -57,6 +58,7 @@ export function ProfessionalDashboard() {
   const [message, setMessage] = useState("Carregando perfil profissional...");
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isAvatarUploading, setIsAvatarUploading] = useState(false);
 
   useEffect(() => {
     loadProfile();
@@ -81,11 +83,12 @@ export function ProfessionalDashboard() {
 
     const { data: publicProfile } = await supabase
       .from("profiles")
-      .select("full_name")
+      .select("full_name, avatar_url")
       .eq("id", user.id)
       .maybeSingle();
 
     if (publicProfile?.full_name) setFullName(publicProfile.full_name);
+    if (publicProfile?.avatar_url) setAvatarUrl(publicProfile.avatar_url);
 
     const { data: professionalProfile } = await supabase
       .from("professional_profiles")
@@ -169,7 +172,7 @@ export function ProfessionalDashboard() {
 
     const { error: profileError } = await supabase
       .from("profiles")
-      .update({ full_name: fullName })
+      .update({ full_name: fullName, avatar_url: avatarUrl || null })
       .eq("id", userId);
 
     const { data, error } = await supabase
@@ -205,6 +208,46 @@ export function ProfessionalDashboard() {
     }
 
     setMessage("Perfil salvo com sucesso.");
+  }
+
+  async function uploadAvatar(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file || !supabase || !userId) return;
+
+    setIsAvatarUploading(true);
+    setMessage("Enviando foto de perfil...");
+
+    const extension = file.name.split(".").pop() || "jpg";
+    const filePath = `${userId}/avatar-${crypto.randomUUID()}.${extension}`;
+    const { error: uploadError } = await supabase.storage
+      .from("professional-portfolio")
+      .upload(filePath, file, { upsert: false });
+
+    if (uploadError) {
+      setIsAvatarUploading(false);
+      setMessage(uploadError.message);
+      return;
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from("professional-portfolio")
+      .getPublicUrl(filePath);
+
+    const nextAvatarUrl = publicUrlData.publicUrl;
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .update({ avatar_url: nextAvatarUrl })
+      .eq("id", userId);
+
+    setIsAvatarUploading(false);
+
+    if (profileError) {
+      setMessage(profileError.message);
+      return;
+    }
+
+    setAvatarUrl(nextAvatarUrl);
+    setMessage("Foto de perfil atualizada.");
   }
 
   async function uploadPhoto(event: React.ChangeEvent<HTMLInputElement>) {
@@ -352,10 +395,24 @@ export function ProfessionalDashboard() {
     await loadSlots(professionalId);
   }
 
+  const initials = fullName
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <section className="pageGrid">
       <form className="pageCard stack" onSubmit={(event) => event.preventDefault()}>
         <h2>Perfil profissional</h2>
+        <div className="profilePhotoEditor">
+          {avatarUrl ? <img src={avatarUrl} alt="Foto de perfil" /> : <span>{initials || "ME"}</span>}
+          <label className="fileButton">
+            {isAvatarUploading ? "Enviando..." : "Alterar foto"}
+            <input accept="image/*" type="file" onChange={uploadAvatar} disabled={isAvatarUploading} />
+          </label>
+        </div>
         <label>Nome publico<input value={fullName} onChange={(event) => setFullName(event.target.value)} /></label>
         <label>Cidade base<input value={city} onChange={(event) => setCity(event.target.value)} /></label>
         <label>Estado<input value={state} onChange={(event) => setState(event.target.value)} /></label>
