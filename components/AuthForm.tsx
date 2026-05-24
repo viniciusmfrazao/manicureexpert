@@ -62,7 +62,7 @@ export function AuthForm() {
 
     setMessage(
       mode === "signup"
-        ? "Cadastro criado. Verifique seu e-mail se a confirmação estiver ativa."
+        ? "Cadastro criado. Agora você já pode entrar com seu e-mail e senha."
         : "Entrada realizada com sucesso."
     );
   }
