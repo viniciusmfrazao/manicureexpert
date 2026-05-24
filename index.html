@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manicure Expert</title>
+    <meta name="theme-color" content="#e93f86" />
+    <meta name="description" content="Manicure Expert: sua manicure onde voce estiver." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/logo-manicure-expert.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#inicio" aria-label="Manicure Expert">
+          <span class="brand-mark">ME</span>
+          <span><strong>Manicure Expert</strong><small>Sua manicure onde voce estiver.</small></span>
+        </a>
+        <nav class="nav-links" aria-label="Navegacao principal">
+          <a href="#cliente">Cliente</a>
+          <a href="#profissional">Profissional</a>
+          <a href="#gestao">Gestao</a>
+        </nav>
+        <a class="nav-action" href="#cliente">Agendar</a>
+      </header>
+
+      <main>
+        <section class="hero" id="inicio">
+          <div class="hero-copy">
+            <span class="eyebrow">Beleza em casa, com confianca</span>
+            <h1>Encontre manicures verificadas perto de voce.</h1>
+            <p>Agende manicure, pedicure e alongamento no endereco que preferir, escolhendo profissionais por localizacao, agenda, preco e avaliacao.</p>
+            <div class="hero-actions">
+              <a class="primary-button" href="#cliente">Encontrar profissional</a>
+              <a class="secondary-button" href="#profissional">Sou profissional</a>
+            </div>
+            <div class="trust-row" aria-label="Destaques">
+              <span>Profissionais verificadas</span><span>Agenda online</span><span>Avaliacoes reais</span>
+            </div>
+          </div>
+
+          <div class="phone-preview" aria-label="Previa do aplicativo">
+            <div class="phone-status"><span>9:41</span><span></span></div>
+            <div class="mobile-card highlight-card"><div><small>Disponiveis agora</small><strong>18 profissionais</strong></div><span class="sparkle">★</span></div>
+            <div class="search-pill">Rua, bairro ou cidade</div>
+            <article class="pro-card featured">
+              <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=500&q=80" alt="Unhas esmaltadas" />
+              <div><strong>Ana Paula</strong><span>Manicure e pedicure • 1,8 km</span><div class="rating">★ 4,9 • 126 avaliacoes</div></div>
+            </article>
+            <article class="service-ticket"><span>Hoje, 15:30</span><strong>Manicure + pedicure</strong><small>R$ 85,00</small></article>
+          </div>
+        </section>
+
+        <section class="section-band" id="cliente">
+          <div class="section-heading"><span class="eyebrow">Area da cliente</span><h2>Busca por localizacao, servico e disponibilidade.</h2></div>
+          <div class="client-layout">
+            <form class="booking-panel" id="bookingForm">
+              <label>Endereco do atendimento<input type="text" value="Av. Paulista, 1000 - Sao Paulo" /></label>
+              <label>Servico desejado<select><option>Manicure e pedicure</option><option>Manicure</option><option>Pedicure</option><option>Alongamento</option><option>Spa dos pes</option></select></label>
+              <div class="inline-fields"><label>Data<input type="date" value="2026-05-25" /></label><label>Horario<input type="time" value="15:30" /></label></div>
+              <button type="submit">Buscar profissionais</button>
+              <p class="form-feedback" id="searchFeedback">Informe o endereco para ver profissionais proximas.</p>
+            </form>
+
+            <div class="professionals-grid">
+              <article class="professional-card">
+                <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=500&q=80" alt="Profissional de beleza" />
+                <div class="card-body"><div class="card-title-row"><strong>Camila Rocha</strong><span class="verified">Verificada</span></div><p>Manicure, pedicure e nail art. Atendimento em ate 8 km.</p><div class="meta-row"><span>★ 4,9</span><span>2,3 km</span><span>Hoje</span></div><button type="button" data-book="Camila Rocha">Agendar R$ 75</button></div>
+              </article>
+              <article class="professional-card">
+                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=500&q=80" alt="Produtos de manicure" />
+                <div class="card-body"><div class="card-title-row"><strong>Juliana Martins</strong><span class="online">Ativa</span></div><p>Especialista em fibra, esmaltacao em gel e spa dos pes.</p><div class="meta-row"><span>★ 4,8</span><span>3,1 km</span><span>Amanha</span></div><button type="button" data-book="Juliana Martins">Agendar R$ 95</button></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-band pro-section" id="profissional">
+          <div class="section-heading"><span class="eyebrow">Area profissional</span><h2>Controle servicos, valores, status e agenda disponivel.</h2></div>
+          <div class="pro-dashboard">
+            <div class="profile-panel"><div class="avatar-ring"><img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=500&q=80" alt="Profissional sorrindo" /></div><h3>Fernanda Alves</h3><p>Manicure Expert verificada</p><button class="status-switch" type="button" id="statusToggle" aria-pressed="true"><span>Status</span><strong id="statusText">Ativa para atendimento</strong></button></div>
+            <div class="services-panel"><div class="panel-header"><strong>Servicos e valores</strong><button type="button" data-panel-action="service">Adicionar</button></div><ul class="service-list"><li><span>Manicure</span><strong>R$ 45</strong></li><li><span>Pedicure</span><strong>R$ 50</strong></li><li><span>Manicure + pedicure</span><strong>R$ 85</strong></li><li><span>Alongamento em gel</span><strong>R$ 160</strong></li></ul></div>
+            <div class="schedule-panel"><div class="panel-header"><strong>Agenda disponivel</strong><button type="button" data-panel-action="schedule">Editar</button></div><div class="time-grid"><button type="button">09:00</button><button type="button">10:30</button><button type="button">13:00</button><button type="button">15:30</button><button type="button">17:00</button><button type="button">19:00</button></div></div>
+          </div>
+        </section>
+
+        <section class="section-band admin-section" id="gestao">
+          <div class="section-heading"><span class="eyebrow">Tela de gestao</span><h2>Administre profissionais, usuarios, agenda e avaliacoes.</h2></div>
+          <div class="admin-grid"><article class="metric-card"><span>Profissionais</span><strong>248</strong><small>36 aguardando analise</small></article><article class="metric-card"><span>Usuarios</span><strong>4.820</strong><small>+18% este mes</small></article><article class="metric-card"><span>Agendamentos</span><strong>1.126</strong><small>92% concluidos</small></article><article class="metric-card"><span>Avaliacao media</span><strong>4,8</strong><small>Baseada em 873 avaliacoes</small></article></div>
+          <div class="management-table"><div class="table-top"><strong>Profissionais em analise</strong><button type="button" data-admin-action="all">Ver todos</button></div><div class="table-row table-head"><span>Nome</span><span>Regiao</span><span>Status</span><span>Acao</span></div><div class="table-row"><span>Mariana Lopes</span><span>Moema • 6 km</span><span class="pending">Documentos pendentes</span><button type="button" data-admin-action="review">Analisar</button></div><div class="table-row"><span>Bianca Souza</span><span>Tatuape • 10 km</span><span class="approved">Pronta para ativar</span><button type="button" data-admin-action="approve">Aprovar</button></div><div class="table-row"><span>Renata Lima</span><span>Pinheiros • 8 km</span><span class="review">Avaliacao denunciada</span><button type="button" data-admin-action="moderate">Revisar</button></div></div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
