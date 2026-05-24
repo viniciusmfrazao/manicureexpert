@@ -4,7 +4,14 @@ import { useState } from "react";
 import { supabase, isSupabaseConfigured } from "../lib/supabase";
 
 type Role = "customer" | "professional";
+type ProfileRole = "customer" | "professional" | "admin";
 type Mode = "login" | "signup";
+
+function getRolePath(role?: string) {
+  if (role === "admin") return "/gestao";
+  if (role === "professional") return "/profissional";
+  return "/cliente";
+}
 
 export function AuthForm() {
   const [mode, setMode] = useState<Mode>("login");
@@ -35,36 +42,33 @@ export function AuthForm() {
           })
         : await supabase.auth.signInWithPassword({ email, password });
 
-    setIsLoading(false);
-
     if (response.error) {
+      setIsLoading(false);
       setMessage(response.error.message);
       return;
     }
 
-    if (mode === "login" && response.data.user) {
+    const user = response.data.user;
+
+    if (user) {
       const { data: profile } = await supabase
         .from("profiles")
         .select("role")
-        .eq("id", response.data.user.id)
-        .single();
+        .eq("id", user.id)
+        .maybeSingle();
 
-      const rolePath =
-        profile?.role === "admin"
-          ? "/gestao"
-          : profile?.role === "professional"
-            ? "/profissional"
-            : "/cliente";
+      const profileRole = profile?.role as ProfileRole | undefined;
+      const metadataRole = user.user_metadata?.role as ProfileRole | undefined;
+      const fallbackRole = mode === "signup" ? role : metadataRole;
+      const rolePath = getRolePath(profileRole || fallbackRole);
 
-      window.location.href = rolePath;
+      setMessage("Entrada realizada. Redirecionando...");
+      window.location.assign(rolePath);
       return;
     }
 
-    setMessage(
-      mode === "signup"
-        ? "Cadastro criado. Agora você já pode entrar com seu e-mail e senha."
-        : "Entrada realizada com sucesso."
-    );
+    setIsLoading(false);
+    setMessage("Cadastro criado. Agora você já pode entrar com seu e-mail e senha.");
   }
 
   return (
