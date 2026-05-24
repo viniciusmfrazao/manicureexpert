@@ -1,7 +1,3 @@
-insert into public.schema_migrations (version, name)
-values ('006', 'service_and_availability_management_policies')
-on conflict (version) do nothing;
-
 drop policy if exists "Professionals can delete own portfolio photos" on public.professional_portfolio_photos;
 create policy "Professionals can delete own portfolio photos"
 on public.professional_portfolio_photos
