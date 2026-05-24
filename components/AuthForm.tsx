@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../lib/supabase";
 
 type Role = "customer" | "professional";
@@ -13,6 +13,15 @@ function getRolePath(role?: string) {
   return "/cliente";
 }
 
+function getRoleFromEmail(email?: string) {
+  if (!email) return undefined;
+  if (email === "viniciusmfrazao@gmail.com") return "admin";
+  if (email === "admin.teste@manicureexpert.com") return "admin";
+  if (email === "profissional.teste@manicureexpert.com") return "professional";
+  if (email === "cliente.teste@manicureexpert.com") return "customer";
+  return undefined;
+}
+
 export function AuthForm() {
   const [mode, setMode] = useState<Mode>("login");
   const [role, setRole] = useState<Role>("customer");
@@ -21,6 +30,27 @@ export function AuthForm() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function redirectExistingSession() {
+      if (!supabase) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) return;
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+      const profileRole = profile?.role as ProfileRole | undefined;
+      const metadataRole = session.user.user_metadata?.role as ProfileRole | undefined;
+      const emailRole = getRoleFromEmail(session.user.email) as ProfileRole | undefined;
+      window.location.replace(getRolePath(profileRole || emailRole || metadataRole));
+    }
+
+    redirectExistingSession();
+  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -59,11 +89,11 @@ export function AuthForm() {
 
       const profileRole = profile?.role as ProfileRole | undefined;
       const metadataRole = user.user_metadata?.role as ProfileRole | undefined;
+      const emailRole = getRoleFromEmail(user.email) as ProfileRole | undefined;
       const fallbackRole = mode === "signup" ? role : metadataRole;
-      const rolePath = getRolePath(profileRole || fallbackRole);
 
       setMessage("Entrada realizada. Redirecionando...");
-      window.location.assign(rolePath);
+      window.location.replace(getRolePath(profileRole || emailRole || fallbackRole));
       return;
     }
 
